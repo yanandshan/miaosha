@@ -38,7 +38,7 @@ public class AdminController {
         if (token != null) {
             ResultEntry<String> resultEntry = new ResultEntry<String>(true, token);
 
-
+            System.out.println("赵岩");
             return resultEntry;
         } else {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
