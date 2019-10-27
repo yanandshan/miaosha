@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.PromoMapper">
+    <resultMap id="BaseResultMap" type="com.qfedu.pojo.Promo">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="promo_name" jdbcType="VARCHAR" property="promoName"/>
+        <result column="start_date" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="item_id" jdbcType="INTEGER" property="itemId"/>
+        <result column="promo_item_price" jdbcType="DOUBLE" property="promoItemPrice"/>
+        <result column="end_date" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="stock" property="stock"/>
+
+    </resultMap>
+    <select id="getAllGoods" resultMap="BaseResultMap">
+        select p.*,i.img_url,s.stock from promo p,item i,item_stock s
+        where p.item_id=i.id and i.id=s.item_id
+     </select>
+
+    <resultMap id="DetailResultMap" type="com.qfedu.pojo.ItemPromoDetail">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="promo_name" jdbcType="VARCHAR" property="promoName"/>
+        <result column="start_date" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="item_id" jdbcType="INTEGER" property="itemId"/>
+        <result column="promo_item_price" jdbcType="DOUBLE" property="promoItemPrice"/>
+        <result column="end_date" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="stock" property="stock"/>
+        <result column="title" property="title"/>
+        <result column="price" property="price"/>
+        <result column="sales" property="sales"/>
+
+    </resultMap>
+    <select id="getItemByitemId" resultMap="DetailResultMap">
+        select p.*,i.img_url,i.title,i.price,i.sales,s.stock from promo p,item i,item_stock s
+        where p.item_id=i.id and i.id=s.item_id and p.item_id=#{itemId}
+     </select>
+
+
+
+</mapper>

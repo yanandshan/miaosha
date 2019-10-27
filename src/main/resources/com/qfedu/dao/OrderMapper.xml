@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.OrderMapper">
+<!--
+
+    <update id="updateItemStock" parameterType="int">
+       update item_stock set stock=stock -1 where item_id = #{itemId}
+    </update>
+-->
+
+    <insert id="createOrder" parameterType="map">
+-- 这里使用insert ignore 是为了因为user_name，promo_id是主键，正常插入主键重复会报错，这里是忽略主键重复订单不起效果
+     insert ignore into order_info (user_name, promo_id,state,create_time)
+     values (#{username}, #{promoId},1,#{createTime})
+    </insert>
+
+    <select id="createOrderAndStock" statementType="CALLABLE">
+    CALL order_and_stock(
+    #{promoId,jdbcType=BIGINT,mode=IN},
+    #{phone,jdbcType=BIGINT,mode=IN},
+    #{itemId,jdbcType=BIGINT,mode=IN},
+    #{result,jdbcType=INTEGER,mode=OUT}
+    )
+</select>
+</mapper>

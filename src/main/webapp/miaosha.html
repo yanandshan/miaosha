@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>Y先生教育</title>
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<style type="text/css">
+    th {
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="jumbotron" style="padding-top: 15px;padding-bottom: 15px;">
+    <div class="container"><h2 style="text-align: center">秒杀列表</h2></div>
+</div>
+
+<div class="container" style="margin-top: 20px;">
+
+    <table class="table table-bordered table-hover" id="tb"
+           style="text-align: center;table-layout:fixed;">
+        <thead>
+        <tr class="active">
+            <th>名称</th>
+            <th>图片</th>
+            <th>库存</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>详情页</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script>
+    $(function () {
+        $.post("promo/list", null, function (data) {
+            var list = data.data;
+            /*这个方法里是ajax发送请求成功之后执行的代码*/
+            $(list).each(function () {
+                var id = this.itemId;
+                //拼接表格的行和列
+                str = "<tr><td>" + this.promoName + "</td><td><img width='30px' height='30px' src='" + this.imgUrl + "'/></td><td>" + this.stock + "</td><td>" +
+                    this.startDate + "</td><td>" + this.endDate + "</td><td><button type=\"button\" class=\"btn btn-primary\" onclick=\"showInfo(" + id + ")\" >详情</button></tr>";
+                $("#tb").append(str);
+            })
+        })
+    })
+
+    function showInfo(item_id) {
+        location.href = "itemQG.html?itemId=" + item_id;
+    }
+
+</script>
+
+</body>
+</html>
